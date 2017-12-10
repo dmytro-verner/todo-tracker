@@ -7,8 +7,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes("name")
 public class LoginController {
 
     @Autowired
@@ -25,12 +27,14 @@ public class LoginController {
 
         boolean isValidUser = service.validateUser(name, password);
 
-        if (isValidUser) {
-            model.put("name", name);
-            return "welcome";
-        } else {
-            model.put("errorMessage", "Invalid Credentials!!");
+        if (!isValidUser) {
+            model.put("errorMessage", "Invalid Credentials");
             return "login";
         }
+
+        model.put("name", name);
+        model.put("password", password);
+
+        return "welcome";
     }
 }
