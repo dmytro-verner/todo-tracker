@@ -15,6 +15,7 @@
                     <th>Description</th>
                     <th>Date</th>
                     <th>Is it Done?</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +24,11 @@
                         <td>${todo.description}</td>
                         <td>${todo.targetDate}</td>
                         <td>${todo.done}</td>
+                        <td>
+                            <form action = "/delete-todo?id=${todo.id}" method = "post">
+                                <input type="submit" class="btn btn-warning" name="delete" value="Delete" />
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>

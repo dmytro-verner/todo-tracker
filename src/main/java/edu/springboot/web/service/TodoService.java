@@ -28,6 +28,6 @@ public class TodoService {
     }
 
     public void deleteTodo(int id){
-        todos.stream().filter(t -> t.getId() != id).collect(Collectors.toList());
+        todos.removeIf(t -> t.getId() == id);
     }
 }
