@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <html>
     <head>
         <title>Add a todo</title>
@@ -6,13 +8,15 @@
     </head>
     <body>
         <div class="container">
-            <form method="post">
+            <form:form method="post" commandName="todo">
                 <fieldset class="form-group">
-                    <label>Description</label>
-                    <input name="description" type="text" class="form-control" required="required"/>
+                    <form:label path="description">Description</form:label>
+                    <form:input path="description" type="text" class="form-control" required="required"/>
+                    <form:errors path="description" cssClass="text-warning"></form:errors>
                 </fieldset>
+
                 <button type="submit" class="btn btn-success">Add</button>
-            </form>
+            </form:form>
         </div>
 
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
