@@ -23,8 +23,17 @@ public class TodoService {
         return todos.stream().filter(t -> t.getUser().equals(user)).collect(Collectors.toList());
     }
 
+    public Todo retrieveTodo(int id){
+        return todos.stream().filter(t -> t.getId() == id).findAny().orElse(null);
+    }
+
     public void addTodo(String user, String description, Date date, boolean isDone){
         todos.add(new Todo(++todoCount, user, description, date, isDone));
+    }
+
+    public void updateTodo(Todo todo){
+        todos.remove(todo);
+        todos.add(todo);
     }
 
     public void deleteTodo(int id){

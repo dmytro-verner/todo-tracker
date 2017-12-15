@@ -25,8 +25,11 @@
                             <td>${todo.targetDate}</td>
                             <td>${todo.done}</td>
                             <td>
+                                <a type="button" class="btn btn-success" href="/update-todo?id=${todo.id}">Update</a>
+                            </td>
+                            <td>
                                 <form action = "/delete-todo?id=${todo.id}" method = "post">
-                                    <input type="submit" class="btn btn-warning" name="delete" value="Delete" />
+                                    <input type="submit" class="btn btn-warning" value="Delete" />
                                 </form>
                             </td>
                         </tr>
