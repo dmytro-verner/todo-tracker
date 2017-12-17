@@ -23,7 +23,9 @@
                     </td>
                     <td>
                         <form action = "/delete-todo?id=${todo.id}" method = "post">
-                            <input type="submit" class="btn btn-warning" value="Delete" />
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="submit" class="btn btn-warning" value="Delete"
+                            />
                         </form>
                     </td>
                 </tr>

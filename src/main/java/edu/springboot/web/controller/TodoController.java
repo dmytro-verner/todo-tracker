@@ -1,6 +1,7 @@
 package edu.springboot.web.controller;
 
 import edu.springboot.web.model.Todo;
+import edu.springboot.web.security.SecurityHelper;
 import edu.springboot.web.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -15,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
-@SessionAttributes("name")
 public class TodoController {
 
     @Autowired
@@ -29,14 +29,14 @@ public class TodoController {
 
     @RequestMapping(value = "/list-todos", method = RequestMethod.GET)
     public String showTodosList(ModelMap model){
-        String name = getLoggedInUsername(model);
+        String name = SecurityHelper.getLoggedInUsername();
         model.put("todos", todoService.retrieveTodos(name));
         return "list-todos";
     }
 
     @RequestMapping(value = "/add-todo", method = RequestMethod.GET)
     public String showAddTodo(ModelMap model){
-        model.addAttribute("todo", new Todo(0, getLoggedInUsername(model),
+        model.addAttribute("todo", new Todo(0, SecurityHelper.getLoggedInUsername(),
                 "", new Date(), false));
         return "todo";
     }
@@ -46,7 +46,7 @@ public class TodoController {
         if(result.hasErrors())
             return "todo";
 
-        todoService.addTodo(getLoggedInUsername(model), todo.getDescription(), todo.getTargetDate(), false);
+        todoService.addTodo(SecurityHelper.getLoggedInUsername(), todo.getDescription(), todo.getTargetDate(), false);
         return "redirect:/list-todos";
     }
 
@@ -61,7 +61,7 @@ public class TodoController {
         if(result.hasErrors())
             return "todo";
 
-        todo.setUser(getLoggedInUsername(model));
+        todo.setUser(SecurityHelper.getLoggedInUsername());
         todoService.updateTodo(todo);
         return "redirect:/list-todos";
     }
@@ -71,9 +71,5 @@ public class TodoController {
     public String deleteTodo(@RequestParam int id){
         todoService.deleteTodo(id);
         return "redirect:/list-todos";
-    }
-
-    private String getLoggedInUsername(ModelMap model) {
-        return (String) model.get("name");
     }
 }
